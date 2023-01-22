@@ -10,7 +10,7 @@ Matplotlib<br>
 OpenCV<br>
 
 # Usage
-1. Clone the repository: git clone https://github.com/[username]/emotion-detection-cnn.git
+1. Clone the repository: git clone https://github.com/Seoyangsam/emotion-detection-cnn.git
 2. Install the required packages: pip install -r requirements.txt
 3. Train the model: python train.py
 4. Test the model: python test.py
