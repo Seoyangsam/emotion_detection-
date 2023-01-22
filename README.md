@@ -1,1 +1,30 @@
 # emotion_detection-
+
+This project uses a convolutional neural network (CNN) to detect emotions from images of human faces. The model is trained on the Child Affective Facial Expression (CAFE) dataset, which contains images of children's faces labeled with one of seven emotions: angry, disgusted, fearful, happy, neutral, sad, and surprised.
+
+Requirements
+Python 3.6 or higher
+TensorFlow 2.x
+Numpy
+Matplotlib
+OpenCV
+
+Usage
+Clone the repository: git clone https://github.com/[username]/emotion-detection-cnn.git
+Install the required packages: pip install -r requirements.txt
+Download the CAFE dataset from the official website and place it in the project directory.
+Train the model: python train.py
+Test the model: python test.py
+
+Additional Info
+The model architecture used in this project is based on this paper
+The training process takes around 5-10 minutes on a GPU and 20-30 minutes on a CPU.
+The trained weights are saved in the saved_model directory, which is created after the training process.
+The test process will take the image path as an input and it will return the predicted emotion on that image.
+
+Contributing
+This project is open for contributions. If you have any suggestions or bug reports, please open an issue or submit a pull request.
+
+References
+Child Affective Facial Expression dataset
+Facial Expression Recognition using CNN
