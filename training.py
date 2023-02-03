@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
 
 # specify the directory where the images are located
-data_dir = "path/to/cafe/images/sessions"
+data_dir = "./data"
 
 # create empty lists to hold the images and labels
 images = []
