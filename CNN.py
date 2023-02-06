@@ -30,12 +30,11 @@ import numpy as np
 import argparse
 import matplotlib.pyplot as plt
 import cv2
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout, Flatten
-from tensorflow.keras.layers import Conv2D
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.layers import MaxPooling2D
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.layers import Dense, Dropout, Flatten
+from tensorflow.python.keras.layers import Conv2D
+from tensorflow.python.keras.layers import MaxPooling2D
+from keras.preprocessing.image import ImageDataGenerator
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -116,7 +115,7 @@ model.add(Dense(7, activation='softmax'))
 
 # If you want to train the same model or try other models, go for this
 if mode == "train":
-    model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e-6),metrics=['accuracy'])
+    model.compile(loss='categorical_crossentropy',optimizer="adam",metrics=['accuracy'])
     model_info = model.fit_generator(
             train_generator,
             steps_per_epoch=num_train // batch_size,
