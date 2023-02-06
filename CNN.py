@@ -70,11 +70,11 @@ def plot_model_history(model_history):
     plt.show()
 
 # Define data generators
-train_dir = 'data/train'
-val_dir = 'data/test'
+train_dir = './train_data'
+val_dir = './test_data'
 
-num_train = 28709 #
-num_val = 7178 #
+num_train = 28709 #这里需要知道训练集里面有多少张图片
+num_val = 7178 #这里需要知道测试集里面有多少张图片
 batch_size = 64
 num_epoch = 50
 
