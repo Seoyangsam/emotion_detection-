@@ -16,7 +16,6 @@ def classifyData(fileDir, tarDir):
             for lab in label_list:
                 if operator.contains(label,lab):
                     target_path = os.path.join("./original data", tarDir, lab)
-                    break
                 else:
                     target_path = os.path.join("./original data", tarDir, label)
 
@@ -77,8 +76,10 @@ def resize(src_path, target_path, new_size):
             
     print("resize finish!")
 
+
 if __name__ == '__main__':
     classifyData("./data/sessions", "./fix_data")
     split("./original data/fix_data", "./test_data", 0.2)
     resize("./original data", "./data", (256, 256))
-   
+
+    shutil.rmtree("./original data")
