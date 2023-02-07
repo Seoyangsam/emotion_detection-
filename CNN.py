@@ -16,6 +16,8 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--mode", help="train/display")
 mode = ap.parse_args().mode
 
+# Set seed value
+np.random.seed(1)
 
 # plots accuracy and loss curves
 def plot_model_history(model_history):
@@ -49,22 +51,22 @@ val_dir = './data/test_data'
 
 num_train = 955
 num_val = 237
-batch_size = 10
-num_epoch = 10
+batch_size = 32
+num_epoch = 20
 
 train_datagen = ImageDataGenerator(rescale=1./255)
 val_datagen = ImageDataGenerator(rescale=1./255)
 
 train_generator = train_datagen.flow_from_directory(
         train_dir,
-        target_size=(48, 48),
+        target_size=(128, 128),
         batch_size=batch_size,
         color_mode="grayscale",
         class_mode='categorical')
 
 validation_generator = val_datagen.flow_from_directory(
         val_dir,
-        target_size=(48, 48),
+        target_size=(128, 128),
         batch_size=batch_size,
         color_mode="grayscale",
         class_mode='categorical')
@@ -72,7 +74,7 @@ validation_generator = val_datagen.flow_from_directory(
 # Create the model
 model = Sequential()
 
-model.add(Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(48, 48, 1)))
+model.add(Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(128, 128, 1)))
 model.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
@@ -91,14 +93,14 @@ model.add(Dense(7, activation='softmax'))
 def train(mode):
     # If you want to train the same model or try other models, go for this
     if mode == "train":
-        model.compile(loss='categorical_crossentropy', optimizer=Adam(lr=0.0001, decay=1e-6), metrics=['accuracy'])
-        model_info = model.fit_generator(
+        model.compile(loss='categorical_crossentropy', optimizer=Adam(lr=0.001, decay=1e-6), metrics=['accuracy'])
+        model_info = model.fit(
                 train_generator,
                 steps_per_epoch=num_train // batch_size,
                 epochs=num_epoch,
                 validation_data=validation_generator,
                 validation_steps=num_val // batch_size)
-        #plot_model_history(model_info)
+        plot_model_history(model_info)
         model.save_weights('model.h5')
 
     # emotions will be displayed on your face from the webcam feed
@@ -125,13 +127,13 @@ def train(mode):
             for (x, y, w, h) in faces:
                 cv2.rectangle(frame, (x, y-50), (x+w, y+h+10), (255, 0, 0), 2)
                 roi_gray = gray[y:y + h, x:x + w]
-                cropped_img = np.expand_dims(np.expand_dims(cv2.resize(roi_gray, (48, 48)), -1), 0)
+                cropped_img = np.expand_dims(np.expand_dims(cv2.resize(roi_gray, (128, 128)), -1), 0)
                 prediction = model.predict(cropped_img)
                 maxindex = int(np.argmax(prediction))
                 cv2.putText(frame, emotion_dict[maxindex], (x+20, y-60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
-            cv2.imshow('Video', cv2.resize(frame,(1600,960),interpolation = cv2.INTER_CUBIC))
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            cv2.imshow('Video', cv2.resize(frame, (1600, 960), interpolation=cv2.INTER_CUBIC))
+            if cv2.waitKey(1) & 0xFF == ord('x'):
                 break
 
         cap.release()
@@ -141,3 +143,4 @@ def train(mode):
 if __name__ == '__main__':
     train("train")
     train("display")
+

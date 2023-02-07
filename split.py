@@ -4,7 +4,7 @@ import cv2
 
 
 def classifyData(fileDir, tarDir):
-    label_list = ["angry","disgust","fearful","happy","neutral","sad", "surprise"]
+    label_list = ["angry", "disgust", "fearful", "happy", "neutral", "sad", "surprise"]
     for dir in os.listdir(fileDir):
         t_dir = os.path.join(fileDir, dir)
         for file in os.listdir(t_dir):
@@ -14,8 +14,9 @@ def classifyData(fileDir, tarDir):
             
             # label_list.append(label)
             for lab in label_list:
-                if operator.contains(label,lab):
+                if operator.contains(label, lab):
                     target_path = os.path.join("./original data", tarDir, lab)
+                    break
                 else:
                     target_path = os.path.join("./original data", tarDir, label)
 
@@ -24,7 +25,7 @@ def classifyData(fileDir, tarDir):
                 os.makedirs(target_path)
 
             target_file = os.path.join(target_path, file)
-            shutil.move( file_path, target_file)
+            shutil.move(file_path, target_file)
     print("classify finish!")
     return
 
@@ -35,27 +36,27 @@ def split(fileDir, tarDir, ratio):
         filenumber = len(pathDir)
         picknumber = int(filenumber * ratio)
         sample = random.sample(pathDir, picknumber)
-        target_path = os.path.join("./original data",tarDir, dir)
+        target_path = os.path.join("./original data", tarDir, dir)
         if not os.path.exists(target_path):
                 os.makedirs(target_path)
 
         for name in sample:
             shutil.move(os.path.join(t_dir, name), target_path)
-    os.rename(fileDir,"./original data/train_data")
+    os.rename(fileDir, "./original data/train_data")
     print("split finish!")
     return
 
 def resize(src_path, target_path, new_size):
     # Define the desired image size
-    # new_size = (256, 256)
+    # new_size = (28, 28)
 
     # Loop through the two main folders (train_data and test_data)
     for main_folder in ["train_data", "test_data"]:
         
         # Loop through the subfolders (angry, disgust, fearful, happy, neutral, sad, surprise)
         for emotion_folder in ["angry", "disgust", "fearful", "happy", "neutral", "sad", "surprise"]:
-            target_dir = os.path.join( target_path , main_folder, emotion_folder)
-            os.makedirs(target_dir )
+            target_dir = os.path.join(target_path , main_folder, emotion_folder)
+            os.makedirs(target_dir)
             # Build the path to the current subfolder
             current_folder = os.path.join(src_path, main_folder, emotion_folder)
 
@@ -69,7 +70,7 @@ def resize(src_path, target_path, new_size):
 
                 # Build the path to the resized image
                 # resized_filename = os.path.join(current_folder, "resized_" + filename)
-                resized_filename = os.path.join(target_dir ,  filename)
+                resized_filename = os.path.join(target_dir,  filename)
 
                 # Save the resized image
                 cv2.imwrite(resized_filename, resized_img)
@@ -80,6 +81,6 @@ def resize(src_path, target_path, new_size):
 if __name__ == '__main__':
     classifyData("./data/sessions", "./fix_data")
     split("./original data/fix_data", "./test_data", 0.2)
-    resize("./original data", "./data", (256, 256))
+    resize("./original data", "./data", (128, 128))
 
     shutil.rmtree("./original data")
