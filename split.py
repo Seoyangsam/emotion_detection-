@@ -29,6 +29,7 @@ def classifyData(fileDir, tarDir):
     print("classify finish!")
     return
 
+
 def split(fileDir, tarDir, ratio):
     for dir in os.listdir(fileDir):
         t_dir = os.path.join(fileDir, dir)
@@ -45,6 +46,7 @@ def split(fileDir, tarDir, ratio):
     os.rename(fileDir, "./original data/train_data")
     print("split finish!")
     return
+
 
 def resize(src_path, target_path, new_size):
     # Define the desired image size

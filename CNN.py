@@ -19,6 +19,7 @@ mode = ap.parse_args().mode
 # Set seed value
 np.random.seed(1)
 
+
 # plots accuracy and loss curves
 def plot_model_history(model_history):
     """
@@ -90,6 +91,7 @@ model.add(Dense(1024, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(7, activation='softmax'))
 
+
 def train(mode):
     if mode == "train":
         model.compile(loss='categorical_crossentropy', optimizer=Adam(lr=0.001, decay=1e-6), metrics=['accuracy'])
@@ -141,4 +143,3 @@ def train(mode):
 if __name__ == '__main__':
     train("train")
     train("display")
-
