@@ -91,7 +91,6 @@ model.add(Dropout(0.5))
 model.add(Dense(7, activation='softmax'))
 
 def train(mode):
-    # If you want to train the same model or try other models, go for this
     if mode == "train":
         model.compile(loss='categorical_crossentropy', optimizer=Adam(lr=0.001, decay=1e-6), metrics=['accuracy'])
         model_info = model.fit(
@@ -103,7 +102,6 @@ def train(mode):
         plot_model_history(model_info)
         model.save_weights('model.h5')
 
-    # emotions will be displayed on your face from the webcam feed
     elif mode == "display":
         model.load_weights('model.h5')
 
@@ -122,7 +120,7 @@ def train(mode):
                 break
             facecasc = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            faces = facecasc.detectMultiScale(gray,scaleFactor=1.3, minNeighbors=5)
+            faces = facecasc.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
 
             for (x, y, w, h) in faces:
                 cv2.rectangle(frame, (x, y-50), (x+w, y+h+10), (255, 0, 0), 2)
