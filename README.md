@@ -4,7 +4,7 @@ This project uses a convolutional neural network (CNN) to detect emotions from i
 
 # Requirements
 Python 3.6 or higher<br>
-TensorFlow 2.x<br>
+TensorFlow 2.3.0<br>
 Numpy<br>
 Matplotlib<br>
 OpenCV<br>
