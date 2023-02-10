@@ -1,3 +1,4 @@
+import tensorflow as tf
 import numpy as np
 import argparse
 import matplotlib.pyplot as plt
@@ -8,16 +9,20 @@ from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import MaxPooling2D
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.regularizers import L1L2
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+# Set seed value
+np.random.seed(1)
+tf.random.set_seed(1)
+
 
 # command line argument
 ap = argparse.ArgumentParser()
 ap.add_argument("--mode", help="train/display")
 mode = ap.parse_args().mode
-
-# Set seed value
-np.random.seed(1)
 
 
 # plots accuracy and loss curves
@@ -52,7 +57,7 @@ val_dir = './data/test_data'
 
 num_train = 955
 num_val = 237
-batch_size = 32
+batch_size = 64
 num_epoch = 20
 
 train_datagen = ImageDataGenerator(rescale=1./255)
@@ -63,38 +68,47 @@ train_generator = train_datagen.flow_from_directory(
         target_size=(128, 128),
         batch_size=batch_size,
         color_mode="rgb",
-        class_mode='categorical')
+        class_mode='categorical',
+        shuffle=True,
+        seed=1)
 
 validation_generator = val_datagen.flow_from_directory(
         val_dir,
         target_size=(128, 128),
         batch_size=batch_size,
         color_mode="rgb",
-        class_mode='categorical')
+        class_mode='categorical',
+        shuffle=True,
+        seed=1)
 
 # Create the model
 model = Sequential()
 
 model.add(Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(128, 128, 3)))
+model.add(BatchNormalization())
 model.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
+model.add(BatchNormalization())
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
 
 model.add(Conv2D(128, kernel_size=(3, 3), activation='relu'))
+model.add(BatchNormalization())
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Conv2D(128, kernel_size=(3, 3), activation='relu'))
+model.add(BatchNormalization())
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
 
 model.add(Flatten())
-model.add(Dense(1024, activation='relu'))
+model.add(Dense(512, activation='relu'))
+model.add(BatchNormalization())
 model.add(Dropout(0.5))
 model.add(Dense(7, activation='softmax'))
 
 
 def train(mode):
     if mode == "train":
-        model.compile(loss='categorical_crossentropy', optimizer=Adam(lr=0.001, decay=1e-6), metrics=['accuracy'])
+        model.compile(loss='categorical_crossentropy', optimizer=Adam(lr=0.0001, decay=1e-6), metrics=['accuracy'])
         model_info = model.fit(
                 train_generator,
                 steps_per_epoch=num_train // batch_size,
