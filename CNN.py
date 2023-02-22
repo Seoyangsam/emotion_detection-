@@ -10,7 +10,6 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import MaxPooling2D
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.layers import BatchNormalization
-from tensorflow.keras.regularizers import L1L2
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -57,8 +56,8 @@ val_dir = './data/test_data'
 
 num_train = 955
 num_val = 237
-batch_size = 64
-num_epoch = 20
+batch_size = 32
+num_epoch = 30
 
 train_datagen = ImageDataGenerator(rescale=1./255)
 val_datagen = ImageDataGenerator(rescale=1./255)
@@ -135,7 +134,6 @@ def train(mode):
             if not ret:
                 break
             facecasc = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-            #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             faces = facecasc.detectMultiScale(frame, scaleFactor=1.3, minNeighbors=5)
 
             for (x, y, w, h) in faces:
@@ -146,7 +144,6 @@ def train(mode):
                 maxindex = int(np.argmax(prediction))
                 cv2.putText(frame, emotion_dict[maxindex], (x + 20, y - 60), cv2.FONT_HERSHEY_SIMPLEX, 1,
                             (255, 255, 255), 2, cv2.LINE_AA)
-
 
             cv2.imshow('Video', cv2.resize(frame, (1600, 960), interpolation=cv2.INTER_CUBIC))
             if cv2.waitKey(1) & 0xFF == ord('x'):

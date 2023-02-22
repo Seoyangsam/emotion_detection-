@@ -83,6 +83,6 @@ def resize(src_path, target_path, new_size):
 if __name__ == '__main__':
     classifyData("./data/sessions", "./fix_data")
     split("./original data/fix_data", "./test_data", 0.2)
-    resize("./original data", "./data", (128, 128))
+    resize("./original data", "./data", (48, 48))
 
     shutil.rmtree("./original data")
