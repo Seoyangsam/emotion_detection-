@@ -56,8 +56,8 @@ val_dir = './data/test_data'
 
 num_train = 955
 num_val = 237
-batch_size = 32
-num_epoch = 30
+batch_size = 16
+num_epoch = 50
 
 train_datagen = ImageDataGenerator(rescale=1./255)
 val_datagen = ImageDataGenerator(rescale=1./255)
