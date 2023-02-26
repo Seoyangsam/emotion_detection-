@@ -8,29 +8,32 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import LeakyReLU
 from tensorflow.keras.layers import BatchNormalization
 from tensorflow.keras.layers import Reshape, Conv2DTranspose
-
+import os
 real_image_dataset = []
 
-# Define the path to the image directory
-image_dir_path = "./data/sessions/"
+# Define the path to your data directory
+data_dir = "./data"
 
-# Use glob to find all image file names in the directory
-image_file_names = glob.glob(image_dir_path + "*.jpg")
+# Loop through the subfolders (angry, disgust, fearful, happy, neutral, sad, surprise)
+for emotion_folder in ["angry", "disgust", "fearful", "happy", "neutral", "sad", "surprise"]:
+    # Build the path to the current subfolder
+    current_folder = os.path.join(data_dir, emotion_folder)
 
-# Loop through each image file name and read the image
-for image_file_name in image_file_names:
-    # Use OpenCV to read the image
-    image = cv2.imread(image_file_name)
+    # Loop through the images in the current subfolder
+    for filename in os.listdir(current_folder):
+        # Build the path to the current image
+        filepath = os.path.join(current_folder, filename)
 
-    # Append the image to the real_image_dataset list
-    real_image_dataset.append(image)
+        # Add the image path to the real_image_dataset list
+        real_image_dataset.append(filepath)
 
+print(real_image_dataset)
 
 # discriminator model
 def generate_discriminator(in_shape=(128, 128, 3)):
     model = Sequential()
-
-    model.add(Conv2D(128, (3, 3), strides=(2, 2), padding='same', input_shape=in_shape))
+    model.add(Conv2D(64, (3, 3), padding='same', input_shape=(128, 128, 3)))
+    #model.add(Conv2D(128, (3, 3), strides=(2, 2), padding='same', input_shape=in_shape))
     model.add(LeakyReLU(alpha=0.2))
     model.add(Dropout(0.25))
 
@@ -52,10 +55,10 @@ def generate_discriminator(in_shape=(128, 128, 3)):
 def generate_generator(latent_dim):
     model = Sequential()
 
-    n_nodes = 128 * 3 * 3
+    n_nodes = 128 * 16 * 16
     model.add(Dense(n_nodes, input_dim=latent_dim))
     model.add(LeakyReLU(alpha=0.2))
-    model.add(Reshape((3, 3, 128)))
+    model.add(Reshape((16, 16, 128)))
 
     model.add(Conv2DTranspose(128, (4, 4), strides=(2, 2), padding='same'))
     model.add(BatchNormalization())
@@ -73,9 +76,9 @@ def generate_generator(latent_dim):
     model.add(BatchNormalization())
     model.add(LeakyReLU(alpha=0.2))
 
-    model.add(Conv2D(1, (7, 7), activation='tanh', padding='same'))
-
+    model.add(Conv2D(3, (3, 3), activation='tanh', padding='same'))
     return model
+
 
 # GAN model
 def generate_GAN(generator, discriminator):
@@ -87,6 +90,7 @@ def generate_GAN(generator, discriminator):
     model.compile(loss='binary_crossentropy', optimizer=opt)
 
     return model
+
 
 # select real samples
 def generate_real_samples(dataset, n_samples):

@@ -59,3 +59,4 @@ if __name__ == '__main__':
     resize("./original data", "./data", (128, 128))
 
     shutil.rmtree("./original data")
+
