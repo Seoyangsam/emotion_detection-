@@ -28,12 +28,24 @@ for emotion_folder in ["angry", "disgust", "fearful", "happy", "neutral", "sad",
         real_image_dataset.append(filepath)
 
 print(real_image_dataset)
+print(type(real_image_dataset))
+
+
+# assuming real_image_dataset is a list of image file paths
+images = []
+for image_path in real_image_dataset:
+    image = cv2.imread(image_path)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) # convert from BGR to RGB
+    images.append(image)
+
+real_image_dataset = np.array(images)
+real_image_dataset = (real_image_dataset - 0.5) / 0.5
 
 # discriminator model
 def generate_discriminator(in_shape=(128, 128, 3)):
     model = Sequential()
-    model.add(Conv2D(64, (3, 3), padding='same', input_shape=(128, 128, 3)))
-    #model.add(Conv2D(128, (3, 3), strides=(2, 2), padding='same', input_shape=in_shape))
+    model.add(Conv2D(128, (3, 3), padding='same', input_shape=(128, 128, 3)))
+    model.add(Conv2D(128, (3, 3), strides=(2, 2), padding='same', input_shape=in_shape))
     model.add(LeakyReLU(alpha=0.2))
     model.add(Dropout(0.25))
 
@@ -55,12 +67,16 @@ def generate_discriminator(in_shape=(128, 128, 3)):
 def generate_generator(latent_dim):
     model = Sequential()
 
-    n_nodes = 128 * 16 * 16
+    n_nodes = 256 * 8 * 8
     model.add(Dense(n_nodes, input_dim=latent_dim))
     model.add(LeakyReLU(alpha=0.2))
-    model.add(Reshape((16, 16, 128)))
+    model.add(Reshape((8, 8, 256)))
 
-    model.add(Conv2DTranspose(128, (4, 4), strides=(2, 2), padding='same'))
+    model.add(Conv2DTranspose(256, (4, 4), strides=(2, 2), padding='same'))
+    model.add(BatchNormalization())
+    model.add(LeakyReLU(alpha=0.2))
+
+    model.add(Conv2DTranspose(256, (4, 4), strides=(2, 2), padding='same'))
     model.add(BatchNormalization())
     model.add(LeakyReLU(alpha=0.2))
 
@@ -68,18 +84,12 @@ def generate_generator(latent_dim):
     model.add(BatchNormalization())
     model.add(LeakyReLU(alpha=0.2))
 
-    model.add(Conv2DTranspose(128, (4, 4), strides=(2, 2), padding='same'))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.2))
-
-    model.add(Conv2DTranspose(128, (4, 4), strides=(2, 2), padding='same'))
+    model.add(Conv2DTranspose(64, (4, 4), strides=(2, 2), padding='same'))
     model.add(BatchNormalization())
     model.add(LeakyReLU(alpha=0.2))
 
     model.add(Conv2D(3, (3, 3), activation='tanh', padding='same'))
     return model
-
-
 # GAN model
 def generate_GAN(generator, discriminator):
     discriminator.trainable = False
@@ -90,6 +100,7 @@ def generate_GAN(generator, discriminator):
     model.compile(loss='binary_crossentropy', optimizer=opt)
 
     return model
+
 
 
 # select real samples
