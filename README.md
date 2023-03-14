@@ -10,7 +10,7 @@ Matplotlib<br>
 OpenCV<br>
 
 # Usage
-1. Clone the repository: git clone https://github.com/Seoyangsam/emotion-detection-cnn.git
+1. Clone the repository: git clone https://github.com/Seoyangsam/emotion-detection-.git
 2. Install the required packages: pip install -r requirements.txt
 3. Download the CAFE dataset from the official website and place it in the project directory.
 4. Data preprocessing: python split.py
