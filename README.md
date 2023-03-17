@@ -10,11 +10,11 @@ Matplotlib<br>
 OpenCV<br>
 
 # Usage
-1. Clone the repository: git clone https://github.com/Seoyangsam/emotion-detection-cnn.git
+1. Clone the repository: git clone https://github.com/Seoyangsam/emotion-detection-.git
 2. Install the required packages: pip install -r requirements.txt
 3. Download the CAFE dataset from the official website and place it in the project directory.
-4. Train the model: python train.py
-5. Test the model: python test.py
+4. Data preprocessing: python split.py
+5. Train the model: python CNN.py
 
 # Additional Info
 The model architecture used in this project is based on [this paper.](https://pediatrics.jmir.org/2022/2/e26760)<br>
