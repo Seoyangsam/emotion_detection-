@@ -2,7 +2,7 @@ import cv2
 import os
 import random
 import shutil
-from Classification.CNN_Models import *
+from CNN_Models import *
 import numpy as np
 
 def labeling(data_path,save_path,use_resize = False):
@@ -45,9 +45,9 @@ def moveFile(fileDir, trainDir):
 if __name__ == '__main__':
     data_path = '../ProGAN/generate_picture_128'
     save_path = '../ProGAN/generate_picture_128/'
-    labeling(data_path,save_path,use_resize=False)
+    labeling(data_path, save_path, use_resize=False)
 
-    # fileDir = 'Dataset_test/'
-    # trainDir = 'Dataset_Train'
-    # moveFile(fileDir, trainDir)
+    #fileDir = './data/test'
+    #trainDir = './data/test'
+    #moveFile(fileDir, trainDir)
 

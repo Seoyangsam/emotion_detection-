@@ -3,7 +3,7 @@ import os
 import numpy as np
 import cv2
 
-from Classification.CNN_Models import *
+from CNN_Models import *
 
 
 def predict(Model, weight_path,data_path):

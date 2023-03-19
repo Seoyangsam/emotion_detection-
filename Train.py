@@ -2,13 +2,14 @@ import tensorflow as tf
 import os
 import numpy as np
 from matplotlib import pyplot as plt
-from tensorflow.keras.optimizers import Adam
-from Classification.CNN_Models import ResNet18
-from tensorflow.keras.losses import SparseCategoricalCrossentropy
+from keras.optimizers import Adam
+from CNN_Models import ResNet18
+from keras.losses import SparseCategoricalCrossentropy
 import cv2 as cv
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from keras.preprocessing.image import ImageDataGenerator
+from utils import moveFile
 
-def generate_dataset(data_path,use_generate_picture = False):
+def generate_dataset(data_path, use_generate_picture=False):
 	all_img = []
 	all_label = []
 	for root, dirs, files in os.walk(data_path, 'r'):
@@ -48,6 +49,7 @@ def generate_dataset(data_path,use_generate_picture = False):
 	print('y.shape:', y.shape)
 	return x, y
 
+
 def train(x_train_savepath, y_train_savepath, save_weight_path, out_put_path,
 		  batch_size = 8, epochs = 300, use_data_enhance = True,use_generate_picture = False):
 
@@ -57,8 +59,8 @@ def train(x_train_savepath, y_train_savepath, save_weight_path, out_put_path,
 		x_train = (x_train - 127.5) / 127.5
 		y_train = np.load(y_train_savepath)
 
-		print('x_train.shape:',x_train.shape)
-		print('y_train.shape:',y_train.shape)
+		print('x_train.shape:', x_train.shape)
+		print('y_train.shape:', y_train.shape)
 
 		x_train_size = x_train.shape[0]
 		arr = np.arange(x_train_size)
@@ -86,7 +88,7 @@ def train(x_train_savepath, y_train_savepath, save_weight_path, out_put_path,
 		np.save(x_train_savepath, x_train)
 		np.save(y_train_savepath, y_train)
 
-	model = ResNet18([2,2,2,2])
+	model = ResNet18([2, 2, 2, 2])
 
 	model.compile(optimizer=Adam(learning_rate=0.001),
 					loss=SparseCategoricalCrossentropy(from_logits=False),
@@ -112,8 +114,6 @@ def train(x_train_savepath, y_train_savepath, save_weight_path, out_put_path,
 		)
 		image_gen_train.fit(x_train)
 
-
-
 		history = model.fit(image_gen_train.flow(x_train,y_train, batch_size = batch_size),epochs = epochs,
 							validation_data = (x_test, y_test), validation_freq = 1, callbacks = [cp_callback])
 	else:
@@ -127,7 +127,7 @@ def train(x_train_savepath, y_train_savepath, save_weight_path, out_put_path,
 	loss = history.history['loss']
 	val_loss = history.history['val_loss']
 
-	plt.subplot(1,2,1)
+	plt.subplot(1, 2, 1)
 	plt.plot(acc, label='Training Accuracy')
 	plt.plot(val_acc, label='Validation Accuracy')
 	plt.title('Training and Validation Accuracy')
@@ -140,7 +140,11 @@ def train(x_train_savepath, y_train_savepath, save_weight_path, out_put_path,
 	plt.legend()
 	plt.savefig(out_put_path + '/acc.png')
 
+
 if __name__ == '__main__':
+	fileDir = './data/test'
+	trainDir = './data/train'
+	moveFile(fileDir, trainDir)
 	x_train_savepath = 'x_train.npy'
 	y_train_savepath = 'y_train.npy'
 	save_weight_path = './checkpointResNet18/ResNet18.ckpt'

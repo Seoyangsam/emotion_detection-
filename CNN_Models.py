@@ -1,7 +1,7 @@
 import tensorflow as tf
-from tensorflow.keras import Model
-from tensorflow.keras.layers import Conv2D,BatchNormalization,Activation,MaxPooling2D,Dropout,Flatten,Dense
-from tensorflow.keras.models import Sequential
+from keras import Model
+from keras.layers import Conv2D,BatchNormalization,Activation,MaxPooling2D,Dropout,Flatten,Dense
+from keras.models import Sequential
 
 '''
 ResNet network model
