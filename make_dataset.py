@@ -1,4 +1,3 @@
-
 import cv2 as cv
 import os
 import shutil
@@ -29,12 +28,12 @@ def make_dataset(source_folder_path,destination_folder_path, train_path,test_pat
 		os.makedirs(train_path)
 	for root, dirs, files in os.walk(destination_folder, 'r'):
 		for i in range(len(files)):
-			file_path = root + '\\' + files[i]
+			file_path = root + '/' + files[i]
 			print('file_path:',file_path)
 			img = cv.imread(file_path)
 			resize_img = cv.resize(img,(128,128))
 			#
-			cv.imwrite(train_path+'\\'+files[i],resize_img)
+			cv.imwrite(train_path+'/'+files[i],resize_img)
 
 	# 		all_picture.append(resize_img[:, :, ::-1])
 	#
@@ -50,7 +49,7 @@ def make_dataset(source_folder_path,destination_folder_path, train_path,test_pat
 	sample1 = random.sample(pathDir, picknumber1)
 	print(sample1)
 	for name in sample1:
-		shutil.move(train_path + name, test_path + "\\" + name)
+		shutil.move(train_path + '/' + name, test_path + "/" + name)
 
 if __name__ =='__main__':
 	source_folder_path = './data'
