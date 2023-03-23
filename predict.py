@@ -10,11 +10,13 @@ def predict(Model, weight_path,data_path):
 	model = Model
 	model.load_weights(weight_path)
 	num_true = 0
+	num_files = 0
 	for root, dirs, files in os.walk(data_path, 'r'):
-		num_files = len(files)
+		num_files += len(files)
+		print('num_files:', num_files)
 		for i in range(len(files)):
-			file_path = root + '\\' + files[i]
-			# print('file_path:', file_path)
+			file_path = root + '/' + files[i]
+			print('file_path:', file_path)
 
 			img = cv2.imread(file_path)[:, :, ::-1]
 			img = (img - 127.5) / 127.5
@@ -23,7 +25,7 @@ def predict(Model, weight_path,data_path):
 			pred = tf.argmax(result, axis=1)
 			np_pred = np.array(pred)
 
-			path_list = file_path.split('\\')
+			path_list = file_path.split('/')
 			label = path_list[-1].split('-')[1][:3]
 			if label == 'ang':
 				label = 0
@@ -72,7 +74,7 @@ if __name__ == '__main__':
 	model = ResNet18([2, 2, 2, 2])
 	checkpoint_save_path = './checkpointResNet18/ResNet18.ckpt'
 
-	data_path = './Dataset_test'
+	data_path = './data/test_data'
 	acc = predict(model, checkpoint_save_path,data_path)
 
 	print(acc)

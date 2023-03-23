@@ -4,6 +4,7 @@ import mediapipe as mp
 
 mp_drawing = mp.solutions.drawing_utils
 mp_holistic = mp.solutions.holistic
+
 image_dir = "./data"
 valid_extensions = ['.jpg']
 folders = os.listdir(image_dir)
@@ -41,7 +42,7 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
         if cv2.waitKey(0) & 0xFF == ord('q'):
             break
 
-cv2.destroyAllWindows()
+#cv2.destroyAllWindows()
 import csv
 import os
 import numpy as np
