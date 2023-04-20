@@ -1,5 +1,5 @@
 import os, shutil, cv2
-import random
+
 
 def classifyData(fileDir, tarDir):
     label_list = ["angry", "disgust", "fearful", "happy", "neutral", "sad", "surprise"]
@@ -24,22 +24,6 @@ def classifyData(fileDir, tarDir):
     print("classify finish!")
     return
 
-def split(fileDir, tarDir, ratio):
-    for dir in os.listdir(fileDir):
-        t_dir = os.path.join(fileDir, dir)
-        pathDir = os.listdir(t_dir)
-        filenumber = len(pathDir)
-        picknumber = int(filenumber * ratio)
-        sample = random.sample(pathDir, picknumber)
-        target_path = os.path.join("./original data",tarDir, dir)
-        if not os.path.exists(target_path):
-                os.makedirs(target_path)
-
-        for name in sample:
-            shutil.move(os.path.join(t_dir, name), target_path)
-    os.rename(fileDir,"./original data/train_data")
-    print("split finish!")
-    return
 
 def resize(src_path, target_path, new_size):
     # Define the desired image size
@@ -72,7 +56,6 @@ def resize(src_path, target_path, new_size):
 
 if __name__ == '__main__':
     classifyData("./data/sessions", "./fix_data")
-    split("./original data/fix_data", "./test_data", 0.2)
     resize("./original data", "./data", (128, 128))
     shutil.rmtree("./original data")
-
+    shutil.rmtree("./data/sessions")
