@@ -30,12 +30,10 @@ PyTorch<br>
    <img width="651" alt="Screen Shot 2023-05-14 at 9 01 31 PM" src="https://github.com/Seoyangsam/emotion_detection-/assets/103278629/f5d84d79-890f-4871-8186-f545553315de">
 
 2. Accuracy on testset<br>
-| Model  | CNN        | CNN+GAN    |
-|--------|------------|------------|
-| Dataset| 1192 images| 5928 images|
-| Accuracy| 0.931      | 0.964      |
-
-
+| Model   | CNN         | CNN+GAN     |
+|---------|-------------|-------------|
+| Dataset | 1192 images | 5928 images |
+| Accuracy| 0.931       | 0.964       |
 
 # Additional Info
 The ProGAN model used in this project is based on [this repo.](https://github.com/aladdinpersson/Machine-Learning-Collection/blob/master/ML/Pytorch/GANs/ProGAN)<br>
