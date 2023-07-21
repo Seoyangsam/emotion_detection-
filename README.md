@@ -14,7 +14,7 @@ TensorFlow 2.3.0<br>
 Numpy<br>
 Matplotlib<br>
 OpenCV<br>
-PyTorch<br> 
+PyTorch 2.0.0+cu117<br> 
 
 # Usage
 1. Clone the repository: git clone https://github.com/Seoyangsam/emotion-detection-.git
