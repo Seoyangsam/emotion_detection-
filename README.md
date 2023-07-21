@@ -42,6 +42,18 @@ The ProGAN model used in this project is based on [this repo.](https://github.co
 The training process of ResNet implemented in JupyterHub of Wageningen University is about 10 days using CPU.<br> 
 The trained weights are saved in checkpointResNet18, which is created after the training process.<br>
 To access the performance of ProGAN, we calculated the FID score. 
+| Emotions  | FID score |
+|-----------|------------|
+| Angry     | 822.98     |
+| Disgust   | 806.63     |
+| Fearful   | 832.89     |
+| Happy     | 789.53     |
+| Neutral   | 814.78     |
+| Sad       | 794.1      |
+| Surprise  | 832.13     |
+| Average   | 813.29     |
+| Baseline  | 549.7/764.4|
+
 
 # Contributing
 This project is open for contributions. If you have any suggestions or bug reports, please open an issue or submit a pull request.
