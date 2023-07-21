@@ -31,7 +31,6 @@ PyTorch<br>
 
 2. Accuracy on testset<br>
 | Model   | CNN         | CNN+GAN     |
-|---------|-------------|-------------|
 | Dataset | 1192 images | 5928 images |
 | Accuracy| 0.931       | 0.964       |
 
