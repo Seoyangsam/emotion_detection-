@@ -26,7 +26,7 @@ PyTorch<br>
 7. Generate new images: python generate.py
 
 # Additional Info
-The ProGAN model used in this project is based on [this repo.](https://github.com/aladdinpersson/Machine-Learning-
+The ProGAN model used in this project is based on [this repo.](https://github.com/aladdinpersson/Machine-Learning-\
 Collection/blob/master/ML/Pytorch/GANs/ProGAN)<br>
 The training process of ResNet implemented in JupyterHub of Wageningen University is about 10 days using CPU.<br> 
 The trained weights are saved in checkpointResNet18, which is created after the training process.<br>
