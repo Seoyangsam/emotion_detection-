@@ -28,9 +28,9 @@ PyTorch<br>
 # Additional Info
 The ProGAN model used in this project is based on [this repo.](https://github.com/aladdinpersson/Machine-Learning-
 Collection/blob/master/ML/Pytorch/GANs/ProGAN)<br>
-The training process of ResNet implemented in JupyterHub of Wageningen University is about 10 days using CPU. 
-The trained weights are saved in the saved_model directory, which is created after the training process.<br>
-The test process will take the image path as an input and it will return the predicted emotion on that image.
+The training process of ResNet implemented in JupyterHub of Wageningen University is about 10 days using CPU<br>. 
+The trained weights are saved in checkpointResNet18, which is created after the training process.<br>
+To access the performance of ProGAN, we calculated the FID score. 
 
 # Contributing
 This project is open for contributions. If you have any suggestions or bug reports, please open an issue or submit a pull request.
