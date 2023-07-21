@@ -21,7 +21,9 @@ PyTorch<br>
 2. Install the required packages: pip install -r requirements.txt
 3. Download the CAFE dataset from the official website and place it in the project directory.
 4. Data preprocessing: python split.py
-5. Train the model: python CNN.py
+5. Train the ResNet model: python Train.py
+6. Make prediction: python predict.py
+7. Generate new images: python generate.py
 
 # Additional Info
 The ProGAN model used in this project is based on [this repo.](https://github.com/aladdinpersson/Machine-Learning-
