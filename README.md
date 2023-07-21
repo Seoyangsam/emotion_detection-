@@ -21,7 +21,8 @@ PyTorch<br>
 5. Train the model: python CNN.py
 
 # Additional Info
-The model architecture used in this project is based on [this paper.](https://pediatrics.jmir.org/2022/2/e26760)<br>
+The ProGAN model used in this project is based on [this repo.](https://github.com/aladdinpersson/Machine-Learning-
+Collection/blob/master/ML/Pytorch/GANs/ProGAN))<br>
 The training process of ResNet implemented in JupyterHub of Wageningen University is about 10 days using CPU. 
 The trained weights are saved in the saved_model directory, which is created after the training process.<br>
 The test process will take the image path as an input and it will return the predicted emotion on that image.
