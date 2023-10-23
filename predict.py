@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
 
 	model = ResNet18([2, 2, 2, 2])
-	checkpoint_save_path = './checkpointResNet18/ResNet18.ckpt'
+	checkpoint_save_path = './checkpointResNet18/ResNet18.ckpt.index'
 
 	data_path = './data/test_data'
 	acc = predict(model, checkpoint_save_path, data_path)
