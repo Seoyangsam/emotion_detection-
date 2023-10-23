@@ -75,7 +75,7 @@ if __name__ == '__main__':
 	checkpoint_save_path = './checkpointResNet18/ResNet18.ckpt'
 
 	data_path = './data/test_data'
-	acc = predict(model, checkpoint_save_path,data_path)
+	acc = predict(model, checkpoint_save_path, data_path)
 
 	print(acc)
 
