@@ -64,8 +64,10 @@ def predict(Model, weight_path,data_path):
 			else:
 				print(label, '======>', np_pred[0])
 
+	
+	print(num_true)
+	print(num_files)
 	return num_true / num_files
-
 
 
 if __name__ == '__main__':
