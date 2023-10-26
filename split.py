@@ -42,7 +42,7 @@ def split(fileDir, tarDir, ratio):
 
         for name in sample:
             shutil.move(os.path.join(t_dir, name), target_path)
-    os.rename(fileDir,"./original data/train_data")
+    os.rename(fileDir, "./original data/train_data")
     print("split finish!")
     return
 
@@ -70,7 +70,7 @@ def resize(src_path, target_path, new_size):
 
                 # Build the path to the resized image
                 # resized_filename = os.path.join(current_folder, "resized_" + filename)
-                resized_filename = os.path.join(target_dir ,  filename)
+                resized_filename = os.path.join(target_dir,  filename)
 
                 # Save the resized image
                 cv2.imwrite(resized_filename, resized_img)
@@ -78,7 +78,7 @@ def resize(src_path, target_path, new_size):
     print("resize finish!")
 
 if __name__ == '__main__':
-    classifyData("./data/sessions", "./fix_data")
+    classifyData("./sessions", "./fix_data")
     split("./original data/fix_data", "./test_data", 0.2)
     resize("./original data", "./data", (128, 128))
     shutil.rmtree("./original data")
