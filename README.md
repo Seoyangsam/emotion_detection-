@@ -24,6 +24,7 @@ PyTorch 2.0.0+cu117<br>
 5. Train the ResNet model: python Train.py
 6. Make prediction: python predict.py
 7. Generate new images: python generate.py
+8. Using trained model to predict emotion in videos: python video.py(remember to change the directory of video)
 
 # Results
 1. Generated images by ProGAN<br>
